@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Reddit.Dtos;
-using Reddit.Mapper;
 using Reddit.Models;
+using Reddit.Persistance;
 
 namespace Reddit.Controllers
 {
@@ -36,5 +36,15 @@ namespace Reddit.Controllers
         {
             return await _context.Users.ToListAsync();
         }
+
+        [HttpPost("{userId:int}/community{communityId:int}")]
+        public async Task<IActionResult> JoinCommunityAsync([FromRoute] int userId, int communityId)
+        {
+            var user = await _context.Users.FirstAsync(x => x.Id == userId);
+            var community = await _context.Community.FirstAsync(x => x.Id == communityId);
+            user.Communities.Add(community);
+            return NoContent();
+        }
+
     }
 }

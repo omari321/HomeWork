@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Reddit;
 using Reddit.Dtos;
 using Reddit.Mapper;
 using Reddit.Models;
+using Reddit.Persistance;
 
 namespace Reddit.Controllers
 {
@@ -100,7 +100,6 @@ namespace Reddit.Controllers
 
             return NoContent();
         }
-
         private bool PostExists(int id)
         {
             return _context.Posts.Any(e => e.Id == id);
